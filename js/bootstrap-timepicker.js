@@ -55,6 +55,7 @@
           this.$element.on({
             'focus.timepicker': $.proxy(this.showWidget, this),
             'click.timepicker': $.proxy(this.showWidget, this),
+            'keydown.timepicker': $.proxy(this.elementTemplateKeydown, this),
             'blur.timepicker': $.proxy(this.blurElement, this),
             'mousewheel.timepicker DOMMouseScroll.timepicker': $.proxy(this.mousewheel, this)
           });
@@ -154,6 +155,14 @@
       }
     },
 
+    elementTemplateKeydown: function(e) {
+      switch (e.keyCode) {
+      case 9: //tab
+        this.hideWidget();
+        break;
+      }
+    },
+    
     elementKeydown: function(e) {
       switch (e.keyCode) {
       case 9: //tab
@@ -1002,6 +1011,7 @@
       switch (e.keyCode) {
       case 9: //tab
         if ((this.showMeridian && name === 'meridian') || (this.showSeconds && name === 'second') || (!this.showMeridian && !this.showSeconds && name === 'minute')) {
+          this.$element.focus();
           return this.hideWidget();
         }
         break;
